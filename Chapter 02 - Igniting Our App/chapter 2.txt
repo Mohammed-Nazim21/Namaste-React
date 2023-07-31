@@ -1,0 +1,85 @@
+$ npm init -> to intialise our project
+	- it will give a package.json file which is the configuration file for npm. 
+	- it keeps track of the approx version of the package which is installed 
+
+bundler -> most important package in our project eg. parcel, webpack, vite, etc.
+
+$ npm install -D parcel ->
+There are two types of dependencies our App can have.
+1. Dev dependencies
+2. Normal dependencies
+
+Difference between tilde ( ~ ) and caret ( ^ ) in package.json
+
+package-lock.json -> keeps track of exact version of the package which is installed
+
+node_modules -> contains the actual code of all the installed dependencies
+
+transitive dependencies -> 
+
+# Building our App using parcel
+npx is similar to npm. npx means executing a package
+
+$ npx parcel index.html -> This will create a dev build. index.html is the source file of our project.
+			parcel will create a server and host our project on it.
+
+parcel is a beast
+parcel goes to source file and builds a development environment
+
+# Another way to get React into our App is via npm. React is a javascript package
+
+CDN links is not a good way to bring React and ReactDOM into our project 
+-> fetching React is costly operation as we are making a network call via the CDN link
+
+How to install React via npm as a normal dependency
+$ npm install react
+
+Also install reactDOM
+$ npm install react-dom
+
+Remove the CDN links and check if react is working
+$ npx parcel index.html
+
+In App.js
+import React from "react" -> import React from react package that is in node_modules
+import ReactDOM from "react-dom" -> 
+
+@parcel/transformer-js: Browser scripts cannot have imports or exports.
+D:\Online Courses\Akshay Saini\Namaste-React\Chapter 02 - Igniting Our App\Code\App.js:2:1
+  1 | // File to write React Code
+> 2 | import React from "react";
+>   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import ReactDOM from "react-dom";
+  4 | 
+D:\Online Courses\Akshay Saini\Namaste-React\Chapter 02 - Igniting Our App\Code\index.html:42:1
+  41 | 
+> 42 | <script src="./App.js"></script>
+>    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The environment was originally created here
+  43 | </body>
+  44 | </html>
+💡 Add the type="module" attribute to the <script> tag.
+
+
+How to create a production build
+$ npx parcel build index.html
+
+ Build failed.
+
+@parcel/namer-default: Target "main" declares an output file path of "App.js" which does not match the compiled bundle type "html".
+
+  D:\Online Courses\Akshay Saini\Namaste-React\Chapter 02 - Igniting Our App\Code\package.json:5:11
+    4 |   "description": "Demo for creating project using npm",
+  > 5 |   "main": "App.js",
+  >   |           ^^^^^^^^ Did you mean "App.html"?
+    6 |   "scripts": {
+    7 |     "test": "jest"
+
+  💡 Try changing the file extension of "main" in package.json.
+
+# dist folder
+parcel stores the production ready code of the project in the dist folder
+
+# browserslist (package)
+add browserslist in package.json
+
+"browserslist": ["last 2 versions"]
