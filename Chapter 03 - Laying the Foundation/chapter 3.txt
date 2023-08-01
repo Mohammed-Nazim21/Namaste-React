@@ -1,0 +1,48 @@
+To execute the project
+$ npx parcel index.html -> will create a dev build for us
+
+Creating a script to start our project. Scripts are made in package.json file
+
+"scripts": {
+    "test": "jest",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+Now instead of writing npx parcel index.html we can use the command 
+$ npm run start -> it will run npx parcel index.html and start our project
+
+This is Standard followed in the industry
+ 
+We can also just write "$ npm start", this will also work since start is a keyword in npm
+But "$ npm build" won't work. Have to use the "run" command
+
+# JSX
+- Javascript syntax which helps us to create React element easily
+- JSX is not part of react
+- we can write React without JSX also
+- JSX is a convention in which JS and HTML is merged But JSX is not HTML inside Javascript
+- JSX is HTML like syntax
+- Attributes in JSX have to be written in camel case
+- Home Work -> Find out how to write various tag inside JSX
+- To write multiline JSX we wrap it inside Braces '()' so Babel can know where JSX starts and ends
+
+# Babel https://babeljs.io/
+
+# How to create nested elements
+
+const HeadingComponent1 = () => {
+  return (
+    <div id="container">
+      <h1>React Functional Component</h1>
+    </div>
+  );
+};
+
+# Hwo to Render a React function component
+root.render(<HeadingComponent1 />); -> This syntax is understood by Babel that this is a functional component
+
+# Special feature in JSX
+-> In JSX, by using curly braces '{}', we can write any javascript expression (but not statements) inside the curly braces
+Writing JavaScript inside JSX is a very powerful thing
+
+# JSX also takes care of XSS attacks
