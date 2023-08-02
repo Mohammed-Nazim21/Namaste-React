@@ -1,0 +1,55 @@
+How to build a App like Swiggy?
+Thought process
+Steps
+1- Planning 
+	- UI design, Layout, Wireframe
+	- Decide the componenets
+
+
+# Different ways of Writing CSS
+How to write inline styles in JSX?
+unlike in HTML, styles in JSX are given by using JavaScript objest
+
+const styleCard = {
+  backgroundColor: "#f0f0f0",
+};
+
+const RestaurantCard = () => {
+  return (
+    <div className="res-card" style={styleCard}>
+      <h3>Res Name</h3>
+    </div>
+  );
+};
+
+Inline styles in not preferred way to write code
+
+# How to make Cards dynamic?
+-> using props
+
+# Props
+When we want to pass in data dynamically to component, we pass it as a props
+- We can pass any number of props
+- we can destructure props on the fly
+const {resName, cuisine} = props
+https://www.geeksforgeeks.org/destructuring-of-props-in-reactjs/
+
+# Config Driven UI
+
+# Optional Chaining in JavaScript
+
+# JavaScript Map Function
+
+{resList.map((restaurant) => (
+          <RestaurantCard resData={restaurant} />
+        ))}
+
+# React Feature
+
+> Warning: Each child in a list should have a unique "key" prop.
+
+## Why we need Keys?
+**Never use Indexes as keys
+https://legacy.reactjs.org/docs/lists-and-keys.html#:~:text=We%20don't%20recommend%20using,an%20index%20as%20a%20key.
+
+https://robinpokorny.com/blog/index-as-a-key-is-an-anti-pattern/
