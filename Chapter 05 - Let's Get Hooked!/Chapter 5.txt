@@ -1,0 +1,76 @@
+React Advantages: 
+- Everything we can do with React, can also be done with normal HTML, CSS and JavaScript
+
+
+File Structure:
+https://legacy.reactjs.org/docs/faq-structure.html
+- Best practice is to make separate files for separate components
+- Component file name should be same as the Component name
+
+	- src
+	    - components
+		- Header.js
+		- Body.js
+		- RestaurantCard.js
+	    - utils
+		- constants.js
+		- mockData.js
+
+# Exporting data 
+- There are two types of import/export
+	1- Default Export/Import (normal export)
+		-> export default (name of variable/component)
+		-> import component from "path";
+
+	2- Named export -> used when we have to export mutliple things from the same file
+		-> export const Component;
+		-> import {Component} from "path";
+
+[Homework]
+Can we use default export along with a Named export?
+
+# Making Our Site Dynamic (Interactive)
+- Create a button to get top rated restaurant (filter)
+	- How to add clickhandler? (find out how to do it in JS)
+-> In React: using onClick attribute 
+<button className="filter-btn" 
+	onClick={() => {
+            console.log("Button Clicked");
+          }}>
+          Top Rated Restaurant
+        </button>
+
+Timestamp - 1:01:40 -> Very IMPORTANT TOPIC
+In React app there is a UI layer and a Data layer
+- UI layer will display what is being sent by the Data layer
+
+ listOfRestaurants = listOfRestaurants.filter(
+              (res) => res.data.data.avgRating > 4
+            );
+
+Filter is working but UI is not updated. How to update the UI?
+
+React super power
+- React is fast and efficient in DOM manipulation
+- React and all other frameworks try to make the UI and Data layer work with each other in sync
+
+React Hook
+- React Hook is a normal JavaScript utility function which is provided by React
+- To use them, we have to import the hooks using Named imports
+	- import { useState } from "react";
+
+- Most Important Hooks -> useState() and useEffect()
+
+useState() -> To create state variable in React
+	- State variables maintains the state of the component
+
+// Local State Variable - super powerful variable
+  const [listOfRestaurants] = useState();
+  // Normal JS variable
+  // let listOfRestaurants;
+
+
+Whenever a state variable updates, React re-renders the component.
+This in React makes DOM operations fast and efficient. This is why React is fast
+React keeps the data layre insync with the UI layer - How?
+React Fiber Architecture -> https://github.com/acdlite/react-fiber-architecture
