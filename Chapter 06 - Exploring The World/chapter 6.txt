@@ -1,0 +1,99 @@
+# Learn: async/await, fetch() API, promises, optional chaining in js, polyfill for map,filter,reduce
+
+# Monolithic and microservices architecture
+
+# How to fetch data from the backend
+- First approach
+	- Page Loads --> API call --> Render
+
+- Second approach
+	- Page Loads --> Render --> API call --> Re-render
+In React we will always use the 2nd approach
+ - This gives us a Better UX
+ - Here we render twice, but this does matter as React's render-cycles are very fast
+ - React has one of the best render mechanisms
+
+# useEffect() Hook
+- Normal React hook (Hook is a normal js function which React gives us)'
+- useEffect has 2 arguments
+	1- callback function
+	2- Dependency Array
+
+useEffect(() => {
+    console.log("useEffect Called");
+  }, []);
+When will the useEffect's callback function will be called?
+-> Callback function will be called after the component(in which useEffect is used) renders.
+- When you have to do something after rendering the component, we write it inside useEffect()
+
+# fetch() API
+- Provided by browser
+*(To catch promise use async/await as it is a standard practice instead of .then.catch)
+
+# CORS Policy
+- search cors on Youtube
+- Allow CORS: Access-Control-Allow-Origin --> chrome extension
+
+# Optional Chaining - read up about it
+json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+- optional chaining is a good way of handling data
+
+# Loading Spinner
+Showing loading spinner is not a good way
+In modern UI we use Shimmer
+
+# Shimmer UI
+- A shimmer UI resembles the page's actual UI, so users will understand how quickly the web or mobile app load even before teh content has shown up
+- This provides better user experience
+
+# Conditional Rendering
+- Rendering on the basis of condition (Google for more)
+
+# Why do we need State variables (useState)?
+-Why do we even have useState() and when to use?
+-> we cannot use javascript variable because UI doesnot re-render when the variable is changed
+-> When a state variable is changed, the UI component re-render
+
+Thought process behind useState()
+- React cannot track when a local js variables changes
+- Whenever we change a state variable using the function provided by useState, React will trigger the render process once again
+
+From our header component example - is React rendering the whole header component again or only the button
+-> It will re-render the whole header component
+
+If btnNameReact is const variable, how is it gettting changed
+-> Because when a state variable changes, react re-renders the whole component (ie the function component is called again) and the btnNameReact variable is new variable
+and differnet from the old btnNameReact variable (old virtual dom, updated virtaul dom)
+
+# Creating Search Functionality
+- Creating a input box and search button
+- Have to create a local state variable to track the value of input box
+
+const [searchText, setSearchText] = useState("");
+  
+<input type="text" className="search-box" value={searchText} />
+(***IMP**)
+- When we try to type something in the input box, it is not registering. Why?
+- > We have bind the value of input box to searchText
+-> And we have bind the searchText to the input box 
+-> searchText is empty and the value of input box won't change unless we change the searchText
+-> To fix this we have to write onChange handler for the input box
+
+<input type="text" className="search-box"value={searchText} onChange={(e) => {setSearchText(e.target.value);}}/>
+
+Whenever we type something in the input box, the whole component gets re-rendered because we are changing the state variable using setSearchText method
+- React is able to do this very quicky and efficiently thanks to its amazing Reconciliation algorithm
+- DOM manipulation is very expensive and React is very efficient in doing it. We just have to write onchange handler's callback method -> onChange={(e) => {setSearchText(e.target.value);}
+- React fiber is the new reconciliation process to efficiently manipulate the DOM
+- Virtual DOM is not making React fast but its the React fibre, the new reconciliation algorithm which finds the difference between two virtual doms and update the DOM only when required and only the portion of the DOM which is required
+
+# Search Functionality Logic
+In search-btn onClick
+```
+const filteredRestaurant = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+
+```
+
+# HomeWork - solve search functionality bug
