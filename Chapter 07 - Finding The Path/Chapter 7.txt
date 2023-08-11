@@ -1,0 +1,192 @@
+# useEffect() Hook
+- How is useEffect hook called?
+	-> useEffect is called using two arguments: 1) Callback function
+						    2) Dependency Array
+	-> useEffect(() => {}, []);
+
+- When is the use useEffect called? (***IMP Interview Question***)
+	-> useEffect is called after every Render of the component
+	- Dependency array changes the behaviour of the components render
+	- Dependency array is not mandatory, only callback function is mandatory inside useEffect
+	- If dependency array is not provided, useEffect will be called on every render of the component.
+	- If dependency array is empty ([]), useEffect will be called only once on inital render.
+	- If the array has somthing in it, useEffect will be called everytime the dependency changes.
+
+# useState() Hook
+- Never use useState and create state variables outside the components
+Warning: Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+- Always call useState inside the component
+- useState is used to create local state variables inside functional component
+- Good practice is to use useState at the start of the component
+- Never use useState inside if-else. It can create inconsistencies inside your program
+- Never create state variables inside forloop
+- Never create state variables inside functions
+
+# Routing in React - React Router
+- $ npm install react-router-dom
+
+## Routing Confiquration
+- Whenever we have to create routes, we have to do routing configuration
+In App.js
+- import {createBrowserRouter} from "react-router-dom"
+
+```
+const appRouter = createBrowserRouter([
+	{
+	  path: "/",
+	  element: <AppLayout/>
+	},
+	{
+	  path: "/about",
+	  element: <About/>
+	},
+])
+``` 
+- import {createBrowserRouter, RouterProvider} from "react-router-dom"
+- This RouterProvider component will provide the routing configuration to our app
+- How?
+	instead of rendering AppLayout directly we will pass <RouterProvider/> to root.render()
+	root.render(<RouterProvider router = {appRouter} />)
+- There are more Router provided but createBrowserRouter is recommended by React Router themselves. This is the recommended router for all React Router web projects. It uses the DOM History API to update the URL and manage the history stack.
+
+### rafce -> VS Code shortcut for creating react functional component
+
+# What happens when unknown route is given in url
+->
+Unexpected Application Error!
+404 Not Found
+💿 Hey developer 👋
+
+You can provide a way better UX than this when your app throws errors by providing your own ErrorBoundary or errorElement prop on your route.
+- This error is handled by React Router DOM
+
+# How we handle error ourselves (Creating error page)
+{
+    path: "/",
+    element: <AppLayout />,
+    errorElement: <Error />,
+  },
+
+# useRouteError Hook (from react-router-dom)
+- useRouteError is provided by React Router
+- More details about the occured error can be provided by using useRouteError
+- In Error.js
+```
+import { useRouteError } from "react-router-dom";
+
+const Error = () => {
+  const err = useRouteError();
+  console.log(err);
+  return (
+    <div>
+      <h1>Oops!!!!</h1>
+      <h2>Something went wrong</h2>
+      <h3>
+        {err.status} : {err.statusText}
+      </h3>
+    </div>
+  );
+};
+
+export default Error;
+```
+# Children Routes
+```
+// Children route of AppLayout
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+    ],
+    errorElement: <Error />,
+  },
+]);
+```
+
+## Outlet componet from react-router-dom
+- Whenever there is a change in the path, the <Outlet/> will be filled with the children according to the path on what page we are
+- Will we <Outlet/> in the HTML?
+-> NO. It will be replaced by the component according to the path
+
+# Creating links to Header Menu
+- When using React and when routing to another page NEVER use anchor tag <a></a>.
+- When using anchor tag, the whole page is refreshed 
+- We can navigate to a new page without reloading the whole page using Link component 
+
+# Link from react-router-dom
+- How to use Link component?
+	-> It works exactly like anchor tag
+	- <Link to="/contact">Contact Us</Link>
+	- Using Link componet only the component is changed. The whole page is not reloaded
+
+# SPA (Single Page Application)
+
+# Types of Routing
+- There are two types of routing that we can have in a web app
+	1. Client Side Routing -> We are implementing 
+	2. Server Side Routing
+
+# Dynamic Routing
+
+## Making Different pages for different restaurants
+- Dynamic route for each restaurant
+```
+      {
+        path: "/restaurants/:resId", // resId is dynamic
+        element: <RestaurantMenu />,
+      },
+```
+## Creating RestaurantMenu component
+
+# GraphQL
+
+# useParams Hook (from react-router-dom)
+- How to use this hook?
+	```
+	const params = useParams();
+	console.log(params); -> {resId: '123'}, it fetches resId from url http://localhost:1234/restaurants/123
+	```
+# Making Restaurant Cards clickable
+```
+<div className="res-container">
+        {filteredRestaurant.map((restaurant) => (
+          // Key has to be on the parent JSX
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}>
+            <RestaurantCard resData={restaurant} />
+          </Link>
+        ))}
+ </div>
+```
+## More about Link
+- What is <Link> inside element(DOM)?
+	-> In HTML it will be an anchor tag (<a><a/>)
+	- Link is provided by react-router and behind the scenes Link is using anchor tag
+- What is different in <Link/> from anchor tag?
+	-> Link is wrapper over anchor tag
+
+
+
+
+
+
+
+
+
