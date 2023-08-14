@@ -1,0 +1,255 @@
+# Class Based Components
+- Older way of creating components inside React
+- How to create class based components?
+	- In About.js create component which is class based to show information of team members. 
+	- First we will make it a functional component and then convert to class based component
+	- Creat User component and import it in About.js
+	- User.js : functional component
+	- UserClass.js : class based component
+- Class componet is a normal JavaScript class
+
+- How to tell react a class is a component?
+	- By Extending the class from React.Component
+
+- Class based component is a class which extends React.Component and it has a render() method that returns some piece of JSX 
+
+- What is React.Component?
+	- It is a class given to us by React
+
+- How to use UserClass in About component?
+	-> Same as functional component
+
+# How to pass props to class based component?
+	-> We would need a constructor in the class and the constructor will recieve the props
+	- Inside the constructor we have to use super(props)
+	- Construct of the class is invoked when an instance of the class is created
+
+- Why we write super(props) and can we avoid writing it?
+	-> NO, we always have to write super(props) otherwise it will throw an error
+	-> Why? (Homework)
+
+- How to use the props in render () method?
+	-> {this.props.name}. Always have to use "this" keyword inside the class
+	- using "this" keyword we can use props anywhere inside the class
+
+```
+// How to write class based component
+import React from "react";
+
+// extends React.Componet will let React know that UserClass is a class based componet
+// now React will start tracking it
+class UserClass extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+
+  render() {
+    return (
+      <div className="user-card">
+        <h2>{this.props.name}</h2>
+        <h3>Location: Goa</h3>
+        <h4>Contact: @nazim</h4>
+      </div>
+    );
+  }
+}
+```
+**************************************************************************************************************
+
+# How to create state inside Class based component?
+	- Load a class based component in our web page means we are creating an instance of that class
+	- Whenever an instance is created, the constructor of the class is invoked
+	- Constructor is the best place to recieve props and create state variables
+	- Functional component and Hooks are new concept inside React
+	- Earlier there were no Hooks
+	- To create state variables in class based component we use "this.state" (state is reserved word)
+	- this.state is a big whole object which contains state variables
+```
+constructor(props) {
+    super(props);
+    console.log(props);
+
+    this.state = {
+      count: 0,
+    };
+  }
+```
+
+# How to create more than 1 state variable is class based components?
+	-> this.state can contains all the state variables
+	```
+	this.state = {
+      		count: 0,
+      		count2: 2,
+   	 };
+	```
+************************************************************************************************************
+
+# How to update state variables in class based components?
+	- We do not change our state variables directly
+	// NEVER UPDATE STATE VARIABLES DIRECTLY 
+        // this.state.count = this.state.count + 1; -> NEVER DO THIS
+	-> React gives us a very important function **this.setState()**
+	# this.setState()
+	- this.setState can be used anywhere inside the class
+	- Inside this.setState() we will pass in an object
+	- This object will contain the updated value of the state variable
+	```
+	this.setState({
+              count: this.state.count + 1,
+            });
+	```
+**************************************************************************************************************
+
+***IMPORTANT***
+# Life Cycle of React Class Based Componenet
+# How class based components are mounted on the web page
+- Cyle when About is functional and User is class based
+- Cyle when About and User are both class based
+- About -> Parent Component
+- UserClass -> Child Component
+- Parent Constr -> Parent render() -> Child constr -> Child render()
+
+# componentDidMount()
+- Class based component have another important method called componentDidMount
+- When it is called?
+	-> Once a component is rendered (ie mounted on the web page), then the componentDidMount() is called
+
+## Life Cycle of React class component
+	- Constructor --> render() --> componentDidMount()
+
+***IMPORTANT INTERVIEW QUESTION***
+- For Parent-Child component
+  - Parent constr --> Parent render() --> Child constr --> Child render() --> Child componentDidMount()  --> Parent componentDidMount()
+
+# Why componentDidMount() is used?
+	-> It is used make API calls (very important use case)
+
+# Why API calls made inside componentDidMount()?
+ - How make API call in Functional component? --> inside useEffect()
+ - Similar we use componentDidMount to make API call so that the UI is render first and then the data is fetched
+**************************************************************************************************************
+
+# How the Life cycle works if we have multiple children?
+-> You might think the order will be
+	- Parent Constructor
+	- Parent render()
+		- Child1 Constructor
+		- Child1 render()
+		- Child1 componentDidMount()
+
+		- Child2 Constructor
+		- Child2 render()
+		- Child2 componentDidMount()
+
+	- Parent componentDidMount()
+ 	-> This is wrong XXXXXX
+
+- The real order will be =>
+	- Parent Constructor
+	- Parent render()
+		- Child1 Constructor
+		- Child1 render()
+
+		- Child2 Constructor
+		- Child2 render()
+
+		- Child1 componentDidMount()
+		- Child2 componentDidMount()
+
+	- Parent componentDidMount()
+
+# Why is it Happening like this?
+	-> Because React is optimising the render cycle
+	-> See React Life Cycle Diagram
+	- https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+	- If you understand this diagram than nobody can defeat you/
+- Only focus upon the first box (Mounting)
+	- When a component is mounted, it is mounted in 2 phases
+		1. Render Phase
+		2. Commit Phase
+- React will batch the Render phase for the two children
+	- Why is React doing this?
+	-> When the commit phase starts, React will start to update the DOM
+	- DOM manipulation is the most expensive thing when we are updating a component
+	- Everything in the Render phase is happening inside Virtual DOM
+	- Render phase is very fast, Commit phase takes time
+
+	- Parent Constructor
+	- Parent render()
+
+		- Child1 Constructor
+		- Child1 render()
+
+		- Child2 Constructor
+		- Child2 render()
+
+		<DOM UPDATED - IN SINGLE BATCH>
+		- Child1 componentDidMount()
+		- Child2 componentDidMount()
+
+	- Parent componentDidMount()
+**************************************************************************************************************
+
+- Github User API -   https://api.github.com/users/USERNAME
+
+# How to make API call inside Class Based Component?
+```
+async componentDidMount() {
+
+    const data = await fetch("https://api.github.com/users/akshaymarch7");
+    const json = await data.json();
+
+    this.setState({
+      userInfo: json,
+    });
+
+    console.log(json);
+  }
+``` 
+
+# How the Life Cycle will work for this code with the API call?
+->
+/**
+ *
+ * --- MOUNTING ---
+ *
+ * Constructor (dummy data)
+ * Render (dummy data)
+ *        < HTML Dummy >
+ * Component Did Mount
+ *        < API Call >
+ *        <this.setState> --> state variable is update
+ *
+ * --- UPDATING ---
+ *
+ *        render(API data)
+ *        < HTML (new API data) >
+ * Componen tDid Update
+ *
+ *
+ */
+
+# Unmounting Phase
+- componentWillUnmount()
+	-> This function will be called just before our component is unmounted (removed from HTML/UI)
+	- e.g. when we navigate to another page
+************************************************************************************************************
+
+# Deeper into Older Way (Clip from Live Session)
+* NEVER COMPARE REACT LIFE CYCLE METHODS TO FUNCTIONAL COMPONENT
+- NEVER say that useEffect() = componentDidMount()
+- useEffect is NOT using componentDidMount behind the scenes
+- In modern React code, the concept of Life Cycle Method is removed
+
+# what is the use case of componentWillUnmount()?
+
+
+02:32:00 – What will happen if we create setInterval inside useEffect
+02:36:30 – coding Profile.js 
+02:45:30 – Async in useEffect()
+
+
+
+
